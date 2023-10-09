@@ -3,6 +3,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const unitSelect = document.getElementById("unit");
     const convertButton = document.getElementById("convert");
     const resultDiv = document.getElementById("result");
+    const body = document.body;
+
+    // Function to fetch a random background image from Lorem Picsum
+    function fetchRandomBackground() {
+        const randomImageId = Math.floor(Math.random() * 1000); // You can change the maximum number as per your preference
+        const imageUrl = `https://picsum.photos/id/${randomImageId}/1920/1080`;
+
+        const tempImage = new Image();
+        tempImage.src = imageUrl;
+
+        tempImage.onload = function () {
+            body.style.backgroundImage = `url(${imageUrl})`;
+            body.style.transition = "background-image 1s ease-in-out";
+        };
+    }
+
+    // Initial background fetch
+    fetchRandomBackground();
+
+    // Set interval to change background every 10 seconds (you can adjust this)
+    setInterval(fetchRandomBackground, 2000);
 
     convertButton.addEventListener("click", function () {
         convertTemperature();
@@ -28,5 +49,13 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             resultDiv.innerText = "Invalid unit";
         }
+
+        // Apply animation to the input, select, and result div
+        const elementsToAnimate = [temperatureInput, unitSelect, convertButton, resultDiv];
+
+        elementsToAnimate.forEach((element) => {
+            element.style.opacity = "1";
+            element.style.transform = "translateY(0)";
+        });
     }
 });
